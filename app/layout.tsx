@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Providers } from "./providers";
 import { CopilotKit } from "@copilotkit/react-core";
-
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +35,10 @@ export default function RootLayout({
           <main className='relative flex flex-col min-h-screen'>
             <Navbar />
             <div className='flex-1 flex-grow'>
-              <Providers>{children}</Providers>
+              <Providers>
+                {children}
+                <Toaster richColors position='top-center' />
+              </Providers>
             </div>
           </main>
         </CopilotKit>
