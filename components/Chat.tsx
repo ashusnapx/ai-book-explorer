@@ -8,7 +8,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
-import { BadgeCheck } from "lucide-react";
+import {
+  BookOpen,
+  Star,
+  MessageSquare,
+  DollarSign,
+  Calendar,
+  Tag,
+  Save,
+  Loader2,
+  BadgeCheck,
+} from "lucide-react";
+import { Badge } from "./ui/badge";
 
 interface BookRecommendation {
   name: string;
@@ -23,7 +34,8 @@ interface BookRecommendation {
 export default function ChatInterface() {
   const [bookRecommendations, setBookRecommendations] = useState<
     BookRecommendation[]
-  >([]);
+      >([]);
+    const [savingIndex, setSavingIndex] = useState<number | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useCopilotAction({
@@ -45,14 +57,18 @@ export default function ChatInterface() {
   });
 
   const saveBook = async (book: BookRecommendation, index: number) => {
+    setSavingIndex(index);
     try {
       await axios.post("/api/books", book);
       toast.success(`"${book.name}" saved to your library.`);
       setBookRecommendations((prev) => prev.filter((_, i) => i !== index));
     } catch {
       toast.error("Failed to save the book. Please try again.");
+    } finally {
+      setSavingIndex(null);
     }
   };
+
 
   // Auto scroll to bottom when new book recommendation added
   useEffect(() => {
@@ -117,34 +133,71 @@ export default function ChatInterface() {
           {bookRecommendations.length > 0 && (
             <div className='space-y-4'>
               {bookRecommendations.map((book, idx) => (
-                <div
+                <Card
                   key={`${book.name}-${idx}`}
-                  className='bg-gray-100 border border-gray-300 rounded-2xl px-5 py-4 shadow-sm'
+                  className='border-gray-200 shadow-sm'
                 >
-                  <div className='text-sm font-semibold text-gray-600'>
-                    📚 Recommended:{" "}
-                    <span className='text-gray-900 font-semibold'>
-                      {book.name}
-                    </span>{" "}
-                    by {book.author}
-                  </div>
+                  <CardHeader>
+                    <CardTitle className='text-sm font-medium text-gray-700 flex items-center gap-2'>
+                      <BookOpen className='h-4 w-4 text-primary' />
+                      <span>
+                        Recommended:{" "}
+                        <span className='text-gray-900 font-semibold'>
+                          {book.name}
+                        </span>{" "}
+                        by {book.author}
+                      </span>
+                    </CardTitle>
+                  </CardHeader>
 
-                  <div className='text-xs grid grid-cols-2 gap-x-4 gap-y-1 text-gray-700'>
-                    <span>⭐ Rating: {book.userRating}</span>
-                    <span>💬 Reviews: {book.reviews}</span>
-                    <span>💲 Price: {book.price}</span>
-                    <span>📅 Year: {book.year}</span>
-                    <span>🏷️ Genre: {book.genre}</span>
-                  </div>
+                  <CardContent className='text-sm text-gray-700 grid grid-cols-2 gap-x-4 gap-y-2'>
+                    <div className='flex items-center gap-1'>
+                      <Star className='h-4 w-4 text-yellow-500' />
+                      <span>Rating: {book.userRating}</span>
+                    </div>
 
-                  <Button
-                    size='sm'
-                    onClick={() => saveBook(book, idx)}
-                    className='mt-2'
-                  >
-                    💾 Save to Library
-                  </Button>
-                </div>
+                    <div className='flex items-center gap-1'>
+                      <MessageSquare className='h-4 w-4 text-blue-500' />
+                      <span>Reviews: {book.reviews}</span>
+                    </div>
+
+                    <div className='flex items-center gap-1'>
+                      <DollarSign className='h-4 w-4 text-green-600' />
+                      <span>Price: {book.price}</span>
+                    </div>
+
+                    <div className='flex items-center gap-1'>
+                      <Calendar className='h-4 w-4 text-gray-500' />
+                      <span>Year: {book.year}</span>
+                    </div>
+
+                    <div className='col-span-2 flex items-center gap-1'>
+                      <Tag className='h-4 w-4 text-purple-500' />
+                      <span>
+                        Genre: <Badge variant='outline'>{book.genre}</Badge>
+                      </span>
+                    </div>
+
+                    <Button
+                      size='sm'
+                      onClick={() => saveBook(book, idx)}
+                      className='mt-2 w-fit'
+                      disabled={savingIndex === idx}
+                    >
+                      {savingIndex === idx ? (
+                        <>
+                          <Loader2 className='h-4 w-4 mr-1 animate-spin' />
+                          Saving...
+                        </>
+                      ) : (
+                        <>
+                          <Save className='h-4 w-4 mr-1' />
+                          Save to Library
+                        </>
+                      )}
+                    </Button>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           )}
