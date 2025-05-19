@@ -1,36 +1,197 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 AI Book Explorer
 
-## Getting Started
+**AI Book Explorer** is a full-stack, production-grade web application that leverages modern AI agents to transform how users discover, manage, and interact with books. Built for Fig Labs’ Front-End Software Engineer assignment, this project demonstrates advanced proficiency in Next.js, TypeScript, Redux Toolkit, Tailwind CSS, and seamless AI integration using LangGraph and CopilotKit.
 
-First, run the development server:
+---
+
+## 📺 Demo
+
+[▶️ Watch the Demo Video](https://your-demo-link.com)
+
+---
+
+## 🧑‍💻 Assignment Overview
+
+> **Fig Labs Challenge:**  
+> Build a web app that enables users to chat with an AI agent for book recommendations/summaries, view book details, and add new books via a form-all backed by a persistent database and a modern, responsive UI.
+
+---
+
+## 🏗️ Architecture & Tech Stack
+
+| Layer         | Technology                              | Purpose                                              |
+|---------------|-----------------------------------------|------------------------------------------------------|
+| Frontend      | Next.js (App Router), TypeScript        | SPA, SSR/SSG, routing, type safety                   |
+| Styling       | Tailwind CSS                            | Utility-first, responsive, accessible UI             |
+| State         | Redux Toolkit                           | Predictable, scalable global state                   |
+| AI Agent      | LangGraph + CopilotKit                  | LLM-powered chat, agent orchestration                |
+| LLM API       | Groq (free tier)                        | Book recommendations, summaries                      |
+| Backend       | Next.js API Routes, Prisma ORM          | RESTful endpoints, DB access, validation             |
+| Database      | PostgreSQL (can swap for SQLite)        | Persistent, relational data storage                  |
+| Validation    | Zod                                     | Schema-based input validation                        |
+| Testing*      | Jest, Playwright (bonus)                | Unit/integration tests                               |
+| Auth*         | Supabase/Clerk/SuperTokens (bonus)      | Optional authentication                              |
+
+\*Bonus features, see below.
+
+---
+
+## 🗂️ File/Directory Structure
+
+```
+ai-book-explorer/
+├── agent/              # LangGraph agent logic, LLM API integration
+├── app/                # Next.js App Router, API routes
+├── components/         # Modular, typed React components (UI, forms, chat)
+├── hooks/              # Custom React hooks
+├── lib/                # Prisma client, validation, server utilities
+├── prisma/             # Database schema, seed scripts (book-details.csv)
+├── public/             # Static assets
+├── store/              # Redux slices, store config
+├── .env                # Environment variables
+├── README.md
+├── package.json
+└── ...
+```
+
+---
+
+## ⚙️ Setup & Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/ai-book-explorer.git
+cd ai-book-explorer
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+```bash
+cp .env.example .env
+# Fill in your DB connection string and Groq API key (see below)
+```
+
+#### Example `.env`
+```
+DATABASE_URL=postgresql://user:pass@localhost:5432/aibooks
+GROQ_API_KEY=your-groq-api-key
+```
+
+### 4. Database Setup & Seeding
+
+- **Import book-details.csv** (provided in assignment):
+
+```bash
+npx prisma migrate dev --name init
+node prisma/seed.js
+```
+
+- *You may supplement with your own book entries.*
+
+### 5. Run the App
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Visit [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧠 AI Integration
 
-## Learn More
+- **LangGraph**: Handles conversational agent logic and workflow orchestration.
+- **CopilotKit**: Provides the interactive chat UI and agent context.
+- **Groq LLM API**: Powers book recommendations and summaries.
+    - [Get a free API key](https://console.groq.com)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏆 Key Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Conversational AI Chat**  
+  - Natural language queries for book recommendations or summaries.
+  - Example: “Recommend a Mystery book” or “Summarize ‘The Silent Patient’.”
 
-## Deploy on Vercel
+- **Book Details View**  
+  - Responsive list and detail pages for each book (title, author, genre, summary).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Add New Books (via Chat Form)**  
+  - Inline form in chat agent.
+  - Validated with Zod, persisted in DB.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Global State Management**  
+  - Redux Toolkit for app-wide state (books, user input, chat history).
+
+- **Responsive, Accessible UI**  
+  - Tailwind CSS, semantic HTML, ARIA attributes for accessibility.
+
+- **Type Safety & Linting**  
+  - End-to-end TypeScript, ESLint, Prettier.
+
+---
+
+## ✨ Bonus Features
+
+- **Authentication** (Optional):  
+  - Easily extendable with Supabase/Clerk/SuperTokens.
+- **Testing** (Optional):  
+  - Unit tests (Jest), integration/e2e (Playwright).
+
+---
+
+## 🧪 Example API Usage
+
+- **GET** `/api/books` - List all books
+- **POST** `/api/books` - Add a new book
+- **POST** `/api/ai/chat` - Query AI agent
+
+---
+
+## 🚦 Design Decisions & Tradeoffs
+
+- **Next.js App Router** for modularity, SSR/SSG, and modern React patterns.
+- **Redux Toolkit** chosen for scalable, type-safe state management.
+- **Prisma ORM** for type-safe DB access and easy migrations.
+- **LangGraph + CopilotKit** for composable, production-ready AI chat experiences.
+- **Groq LLM** for zero-cost, high-quality AI inference.
+
+---
+
+## 📺 Demo Video
+
+[▶️ Watch here](https://your-demo-link.com)
+
+---
+
+## 📄 Resume
+
+[Download my latest resume (PDF)](https://drive.google.com/file/d/1L4d3pGkI9FXsZixV8-fvEnCPHGBJHrSq/view?usp=sharing)
+
+---
+
+## 📬 Submission
+
+- [GitHub Repository](https://github.com/ashusnapx/ai-book-explorer)
+- [Demo Video](https://your-demo-link.com)
+- [Resume (PDF)](https://drive.google.com/file/d/1L4d3pGkI9FXsZixV8-fvEnCPHGBJHrSq/view?usp=sharing)
+
+---
+
+## 🙋‍♂️ About Me
+
+**Ashutosh**  
+[LinkedIn](https://www.linkedin.com/in/ashusnapx/) | [GitHub](https://github.com/ashusnapx)
+
+---
+
+## 📝 License
+
+MIT
