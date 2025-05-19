@@ -2,6 +2,13 @@
 
 **AI Book Explorer** is a full-stack, production-grade web application that leverages modern AI agents to transform how users discover, manage, and interact with books. Built for Fig Labs’ Front-End Software Engineer assignment, this project demonstrates advanced proficiency in Next.js, TypeScript, Redux Toolkit, Tailwind CSS, and seamless AI integration using LangGraph and CopilotKit.
 
+<img width="1440" alt="Screenshot 2025-05-19 at 1 28 39 PM" src="https://github.com/user-attachments/assets/af464e8f-f22f-4929-a342-bed0cc22ae5a" />
+<img width="1440" alt="Screenshot 2025-05-19 at 1 28 51 PM" src="https://github.com/user-attachments/assets/8903c841-3cb7-4235-8f17-14aa191836fe" />
+<img width="671" alt="Screenshot 2025-05-19 at 1 29 27 PM" src="https://github.com/user-attachments/assets/5e2d8dcc-4284-4901-823e-6e52ab2b9777" />
+<img width="1440" alt="Screenshot 2025-05-19 at 1 29 40 PM" src="https://github.com/user-attachments/assets/92602b8c-d3a0-4664-84cf-b6f98c346211" />
+<img width="1440" alt="Screenshot 2025-05-19 at 1 29 48 PM" src="https://github.com/user-attachments/assets/13e187fb-b3d5-43e6-b67c-2cc8459c58e3" />
+
+
 ---
 
 ## 📺 Demo
